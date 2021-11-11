@@ -1,120 +1,99 @@
 import React, { useState, useEffect } from 'react';
-import {Link} from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { listProducts } from '../actions/productActions';
+import { listItems } from '../actions/itemActions';
+import Card from '@mui/material/Card';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import CssBaseline from '@mui/material/CssBaseline';
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Fade } from '@mui/material';
 
 
+const theme = createTheme();
 
 function HomeScreen (props) {
 
-    const [sortOrder, setSortOrder] = useState('');
-    const category = props.match.params.id ? props.match.params.id:'';
+  const [hovered, setHovered] = useState(false);
+  const numDogs = 10;
+  
+  const itemList = useSelector(state => state.itemList);
+  const {items, loading, error} = itemList;
+  
+  const dispatch = useDispatch();
+  const cardRef = React.useRef(null);
+  const dogUrl = 'https://dog.ceo/api/breeds/image/random';
+
+  useEffect(() => {
+      dispatch(listItems(dogUrl, numDogs));
+      // const dogs = (getDogs(cards.length));
+      return () => {
+        //
+      }
+  }, [dispatch]);
+
+  
+
+
+  return (
+  <>
     
-    const productList = useSelector(state => state.productList);
-    const {products, loading, error} = productList;
-
-    const productDetails = useSelector(state => state.productDetails);
-    const { product } = productDetails;
-    
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(listProducts(category));
-        
-        return () => {
-            //
-        }
-    }, [category]);
-
-
-    const submitHandler = (e) => {
-      e.preventDefault();
-      dispatch(listProducts(category, sortOrder))
-    } 
-
-    const sortHandler = (e) => {
-      setSortOrder(e.target.value);
-      dispatch(listProducts(category, sortOrder))
-    }
-
-    return (
-    <>
-    <div className="jumbo">
-      <div className="main-img">
-        <img className="grow" src="https://res.cloudinary.com/djrbfvpit/image/upload/v1615848655/jumbopicsmaller_fhfhjt.png"></img>
-      </div>
-      <div className="tagline">
-        <h1>Meal Prep.</h1>
-        <span className="taglinesub"><h1>Made Easy.</h1></span>
-        <img className="fade-in slide-in-down" src="https://res.cloudinary.com/djrbfvpit/image/upload/v1616011006/downarrow_cz4juo.png"></img>
-      </div>
-      
-    </div>
-    <div className="order-steps">
-      <img src="https://res.cloudinary.com/djrbfvpit/image/upload/v1616008974/checkoutsteps_phlzyk.png"></img>
-    </div>
-
-      {/* I don't see a good use for the search funcionatliy right now, but we'll keep it here for later */}
-
-      {/* {category && <h2>{category}</h2>}
-      <ul className="filter">
-        <li>
-          <form onSubmit={submitHandler}>
-            <input name="searchKeyword" onChange={(e) => setSearchKeyword(e.target.value)} />
-            <button type="submit">Search</button>
-          </form>
-        </li>
-        <li>
-        Sort By {''}
-          <select name="sortOrder" onChange={sortHandler}>
-            <option value="">Newest</option>
-            <option value="lowest">Lowest</option>
-            <option value="highest">Highest</option>
-          </select>
-        </li>
-      </ul> */}
-      {loading ? (
-        <div>Loading...</div>
-      ) : error? (
-        <div>{error}</div>
-      ) : (
-      <ul className="products" id="products">
-            {products.map((product) => (
-              <li key={product._id}>
-                  <div className="product">
-                    <Link to={'/product/' + product._id}>
-                      <img className="product-image" src={product.image} alt="product"/>
-                    </Link> 
-                    <div className="product-name">
-                      <Link to={'/product/' + product._id}>{product.name}</Link> 
-                      </div>
-                    <div className="product-price">${product.price}</div>
-                    <div className="product-rating">{product.rating} Stars</div>
-                    <div className="product-rating">{product.numReviews} Reviews</div>
-                    <div>
-                      <Link to={'/product/' + product._id}>
-                        <button className="button primary">
-                          View Details
-                        </button>
-                      </Link>
-                    </div>
-
-                    {/* In the future, I want to have "Add to Cart" button and "Qty" selection 
-                    using +/- buttons that are limited by product.countInStock. Also to have a "View Details" button
-                    on the product card that opens a pop up window with product details. This flow would have the
-                    customer continually adding items with the cart updating as they do instead of moving through
-                    two different screens for this. */}
-
-                    {/* Problems encountered with this so far: 
-                    - When I increment/decrement on one product it adjusts it for all products on the page
-                    - Unable to get limit from product.countInStock for +/- buttons 
-                    */}
-
-                  </div>
-              </li>
+    {loading ? (
+      <div>Loading...</div>
+    ) : error? (
+      <div>{error}</div>
+    ) : (
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <main>
+          <Container sx={{ py: 3 }} maxWidth="100%">
+            <Grid container spacing={1} sx={{width: '100%'}}>
+              {items.map((item) => (
+                <Grid item key={item._id} xs={12} sm={3} md={2.40} height={275}>
+                  <Card
+                  sx={{ height: '100%', display: 'flex', flexDirection: 'column', padding: '0'}}
+                  >
+                    <CardContent
+                      sx={{
+                      position: 'relative', 
+                      display: 'flex',
+                      justifyContent: 'center', 
+                      alignItems: 'center', 
+                      backgroundColor: 'rgba(219,219,219, 0.5)', 
+                      width: '100%', 
+                      height: '100%', 
+                      padding: '0!important',
+                      cursor: 'pointer',
+                      }}
+                    >
+                      
+                      <Fade in = {hovered === false} timeout = {500} >
+                        <CardMedia
+                            className = 'card-image'
+                            sx={{position: 'absolute', height: '100%', padding: '0'}}
+                            ref = {cardRef}
+                            component="img"
+                            image={item.message}
+                            alt="random"
+                            onMouseEnter = {() => setHovered(true)}
+                            onMouseLeave = {() => setHovered(false)}
+                          />
+                      </Fade>
+                      {/* Put all text in a div, then use grow/disappear, shink reappear function */}
+                      <Typography sx={{ fontSize: 30 }} color="text.secondary" >
+                        Card Title
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
               ))}
-        </ul>  
-      )}
+            </Grid>
+          </Container>
+        </main>
+      </ThemeProvider>
+    )}
   </>
   );
 }

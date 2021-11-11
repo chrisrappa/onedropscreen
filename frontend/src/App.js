@@ -1,36 +1,10 @@
-import {BrowserRouter, Route, Link} from 'react-router-dom';
 import HomeScreen from './Screens/HomeScreen';
-import ProductScreen from './Screens/ProductScreen';
-import CartScreen from './Screens/CartScreen';
-import SigninScreen from './Screens/SigninScreen';
-import RegisterScreen from './Screens/RegisterScreen';
-import ProductsScreen from './Screens/ProductsScreen';
-import { useSelector } from 'react-redux';
-import ShippingScreen from './Screens/ShippingScreen';
-import PaymentScreen from './Screens/PaymentScreen';
-import PlaceOrderScreen from './Screens/PlaceOrderScreen';
-import OrderScreen from './Screens/OrderScreen';
-import ProfileScreen from './Screens/ProfileScreen';
-import OrdersScreen from './Screens/OrdersScreen';
 import { useState } from 'react';
-import OrderScreenStripe from './Screens/OrderScreenStripe';
+import { AppBar, Toolbar, Typography } from '@mui/material';
+
 
 
 function App() {
-
-  const cart = useSelector((state) => state.cart);
-  const { cartItems } = cart;
-
-  const userSignin = useSelector(state => state.userSignin);
-  const { userInfo } =  userSignin;
-  
-  const openMenu = () => {
-    document.querySelector(".sidebar").classList.add("open");
-  }
-
-  const closeMenu = () => {
-    document.querySelector(".sidebar").classList.remove("open");
-  }
 
   const [navScroll, setNavScroll] = useState(false);
 
@@ -45,83 +19,28 @@ function App() {
   window.addEventListener('scroll', addShadow);
 
   return (
-  <BrowserRouter>
-    <div className="grid-container">
-      <header className={ navScroll ? "header active" : "header"}>
-        <div className="brand">
-          <button onClick={openMenu}>
-            &#9776;
-          </button>
-          <Link to="/">Healthy Chef</Link>
-        </div>
-        <div className="header-links">
-          <Link to="/cart">
-            <span>Cart</span>
-            {cartItems.length > 0 && (
-                  <span className="badge">{cartItems.length}</span>
-                )}
-          </Link>
-          {
-            userInfo ? <Link to="/profile">{userInfo.name}</Link>:
-            <Link to="/signin">Sign In</Link>
-          }
-          { userInfo && userInfo.isAdmin && (
-            <div className="dropdown">
-              <a href="#">Admin</a>
-              <ul className="dropdown-content">
-                <li>
-                  <Link to="/orders">Orders</Link>
-                  <Link to="/products">Products</Link>
-                </li>
-              </ul>
-            </div>
-          )}
-        </div>
-      </header>
-      <aside className="sidebar">
-        <button className="sidebar-close-button" onClick={closeMenu}>x</button>
-        <ul className="categories" onClick={closeMenu}>
-          <li>
-            <Link to="/#products" onClick={closeMenu}>All</Link>
-          </li>
-          <li>
-            <Link to="/category/Tofu#products" onClick={closeMenu}>Tofu</Link>
-          </li>
-          <li>
-            <Link to="/category/Beef#products" onClick={closeMenu}>Beef</Link>
-          </li>
-          <li>
-            <Link to="/category/Vegetable#products" onClick={closeMenu}>Vegetable</Link>
-          </li>
-          <li>
-            <Link to="/category/Fish#products" onClick={closeMenu}>Fish</Link>
-          </li>
-          <li>
-            <Link to="/category/Chicken#products" onClick={closeMenu}>Chicken</Link>
-          </li>
-        </ul>
-      </aside>
-      <main className="main">
-        <div className="content" />
-          <Route path="/orders" exact={true} component={OrdersScreen} />
-          <Route path="/products" exact={true} component={ProductsScreen} />
-          <Route path="/shipping" exact={true} component={ShippingScreen} />
-          <Route path="/payment" exact={true} component={PaymentScreen} />
-          <Route path="/placeorder" exact={true} component={PlaceOrderScreen} />
-          <Route path="/" exact={true} component={HomeScreen} />
-          <Route path="/product/:id" component={ProductScreen} />
-          <Route path="/cart/:id?"  component={CartScreen} />
-          <Route path="/category/:id"  component={HomeScreen} />
-          <Route path="/signin" component={SigninScreen} />
-          <Route path="/register" component={RegisterScreen} />
-          <Route path="/order/:id" component={OrderScreenStripe} />
-          <Route path="/profile" component={ProfileScreen} />
-      </main>
-      <footer className="footer">
-        All Rights Reserved
-      </footer>
+    <div className="App">
+    <header className={ navScroll ? "header active" : "header"}>
+      <Toolbar sx={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+        <Typography variant="h4" color="black" noWrap >
+          Biotech
+        </Typography>
+        <Typography variant="h4" color="black" noWrap >
+          Portfolio
+        </Typography>
+      </Toolbar>
+    </header>
+      <AppBar position="relative" sx={{height: "10rem", bgcolor: "white", boxShadow: "none"}}>
+        {/* <Toolbar sx={{display: 'flex', justifyContent: 'space-between', width: '100%', height: '100rem'}}>
+          <Typography variant="h1" color="black" noWrap >
+            Dog Photo Album
+          </Typography>
+        </Toolbar> */}
+      </AppBar>
+    <div>
+      <HomeScreen />
     </div>
-  </BrowserRouter>
+  </div>
   );
 }
 
