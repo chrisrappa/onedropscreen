@@ -37,7 +37,7 @@ function HomeScreen (props) {
   return (
   <>
     {loading ? (
-      <div>Loading...</div>
+      <div className = {classes.loading}><h1>Loading...</h1></div>
     ) : error? (
       <div>{error}</div>
     ) : (

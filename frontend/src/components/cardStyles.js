@@ -33,6 +33,13 @@ export const useStyles = makeStyles(theme => ({
     height: '100%', 
     padding: '0!important',
     cursor: 'pointer',
+  },
+  loading: {
+    display: 'flex',
+    width: '100%', 
+    height: '70vh',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
   
 }));
