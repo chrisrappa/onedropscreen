@@ -2,9 +2,13 @@ import { makeStyles } from "@material-ui/core";
 
 export const useStyles = makeStyles(theme => ({
   titleText: {
-    zIndex: '0',
-    opacity: '0',
+    zIndex: '1',
+    opacity: '100%',
+    color: 'black',
+    fontSize: '4rem',
+    position: 'absolute',
     '&:hover': {
+      opacity: '100%',
       cursor: 'pointer',
       transition: 'all .5s ease-in-out',
       transform: 'scale(1.1)'
@@ -16,7 +20,6 @@ export const useStyles = makeStyles(theme => ({
     height: '100%', 
     padding: '0',
     '&:hover': {
-      zIndex: '1',
       cursor: 'pointer',
       transition: 'all .22s ease-in-out',
       transform: 'scale(2)',
@@ -34,6 +37,7 @@ export const useStyles = makeStyles(theme => ({
     padding: '0!important',
     cursor: 'pointer',
   },
+
   loading: {
     display: 'flex',
     width: '100%', 

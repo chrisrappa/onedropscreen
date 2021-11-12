@@ -56,17 +56,12 @@ export default function HomeScreen () {
                       <CardMedia
                           className = {classes.cardImage}
                           component="img"
-                          // This prop needs to be set based on response JSON (dogs API url was json.message)
                           image={item.message}
                           alt="random"
                       />
-                        <Typography 
-                        className = {classes.titleText}
-                        sx={{ fontSize: 30, position: 'absolute'}} 
-                        color="text.secondary" 
-                        >
-                          Card Title
-                        </Typography>
+                      <Typography className = {classes.titleText}>
+                        Card Title
+                      </Typography>
                     </CardContent>
                   </Card>
                 </Grid>
