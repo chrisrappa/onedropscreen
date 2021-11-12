@@ -1,0 +1,22 @@
+{
+  "name": "photoportfolio",
+  "version": "1.0.0",
+  "description": "Dynamic photo album that pulls from dog api and populates cards with response json objects.",
+  "main": "./frontend/src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrisrappa/photoPortfolio.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chrisrappa/photoPortfolio/issues"
+  },
+  "homepage": "https://github.com/chrisrappa/photoPortfolio#readme",
+  "dependencies": {
+    "node": "^17.0.1"
+  }
+}
