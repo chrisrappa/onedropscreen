@@ -4,7 +4,7 @@ import { AppBar, Toolbar, Typography } from '@mui/material';
 
 
 
-function App() {
+export default function App() {
 
   // navScroll effect
   const [navScroll, setNavScroll] = useState(false);
@@ -40,5 +40,3 @@ function App() {
   </div>
   );
 }
-
-export default App;

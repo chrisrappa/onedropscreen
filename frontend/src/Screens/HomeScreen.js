@@ -15,7 +15,7 @@ import { useStyles } from '../components/cardStyles';
 
 const theme = createTheme();
 
-function HomeScreen () {
+export default function HomeScreen () {
 
   // classes, items(dogs), dispatch, endpoint
   const classes = useStyles();
@@ -79,6 +79,3 @@ function HomeScreen () {
   </>
   );
 }
-    
-
-export default HomeScreen;
