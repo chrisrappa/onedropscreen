@@ -23,7 +23,7 @@ function App() {
     <header className={ navScroll ? "header active" : "header"}>
       <Toolbar sx={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
         <Typography variant="h4" color="black" noWrap >
-          Biotech
+          BioPlus
         </Typography>
         <Typography variant="h4" color="black" noWrap >
           Portfolio
