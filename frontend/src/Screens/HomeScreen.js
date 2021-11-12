@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listItems } from '../actions/itemActions';
 import Card from '@mui/material/Card';
@@ -9,37 +9,33 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Fade } from '@mui/material';
+import { useStyles } from '../components/cardStyles';
 
 
 const theme = createTheme();
 
 function HomeScreen (props) {
 
-  const [hovered, setHovered] = useState(false);
-  const numDogs = 10;
+  const classes = useStyles();
+
   
   const itemList = useSelector(state => state.itemList);
   const {items, loading, error} = itemList;
   
   const dispatch = useDispatch();
-  const cardRef = React.useRef(null);
+
+  const numDogs = 15;
   const dogUrl = 'https://dog.ceo/api/breeds/image/random';
 
   useEffect(() => {
       dispatch(listItems(dogUrl, numDogs));
-      // const dogs = (getDogs(cards.length));
       return () => {
         //
       }
   }, [dispatch]);
 
-  
-
-
   return (
   <>
-    
     {loading ? (
       <div>Loading...</div>
     ) : error? (
@@ -50,41 +46,27 @@ function HomeScreen (props) {
         <main>
           <Container sx={{ py: 3 }} maxWidth="100%">
             <Grid container spacing={1} sx={{width: '100%'}}>
-              {items.map((item) => (
-                <Grid item key={item._id} xs={12} sm={3} md={2.40} height={275}>
+              {items.map((item, index) => (
+                <Grid item key={index} xs={12} sm={3} md={2.40} height={275}>
                   <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column', padding: '0'}}
                   >
                     <CardContent
-                      sx={{
-                      position: 'relative', 
-                      display: 'flex',
-                      justifyContent: 'center', 
-                      alignItems: 'center', 
-                      backgroundColor: 'rgba(219,219,219, 0.5)', 
-                      width: '100%', 
-                      height: '100%', 
-                      padding: '0!important',
-                      cursor: 'pointer',
-                      }}
+                      className = {classes.cardContent}
                     >
-                      
-                      <Fade in = {hovered === false} timeout = {500} >
-                        <CardMedia
-                            className = 'card-image'
-                            sx={{position: 'absolute', height: '100%', padding: '0'}}
-                            ref = {cardRef}
-                            component="img"
-                            image={item.message}
-                            alt="random"
-                            onMouseEnter = {() => setHovered(true)}
-                            onMouseLeave = {() => setHovered(false)}
-                          />
-                      </Fade>
-                      {/* Put all text in a div, then use grow/disappear, shink reappear function */}
-                      <Typography sx={{ fontSize: 30 }} color="text.secondary" >
-                        Card Title
-                      </Typography>
+                      <CardMedia
+                          className = {classes.cardImage}
+                          component="img"
+                          image={item.message}
+                          alt="random"
+                      />
+                        <Typography 
+                        className = {classes.titleText}
+                        sx={{ fontSize: 30, position: 'absolute'}} 
+                        color="text.secondary" 
+                        >
+                          Card Title
+                        </Typography>
                     </CardContent>
                   </Card>
                 </Grid>
