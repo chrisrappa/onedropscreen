@@ -6,6 +6,7 @@ import { AppBar, Toolbar, Typography } from '@mui/material';
 
 function App() {
 
+  // navScroll effect
   const [navScroll, setNavScroll] = useState(false);
 
   const addShadow = () => {
@@ -17,10 +18,12 @@ function App() {
   }
 
   window.addEventListener('scroll', addShadow);
+  // end navScroll effect
 
   return (
     <div className="App">
     <header className={ navScroll ? "header active" : "header"}>
+      {/* To Do: Put sx overrides in to cardStyles.js */}
       <Toolbar sx={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
         <Typography variant="h4" color="black" noWrap >
           BioPlus
@@ -30,13 +33,7 @@ function App() {
         </Typography>
       </Toolbar>
     </header>
-      <AppBar position="relative" sx={{height: "10rem", bgcolor: "white", boxShadow: "none"}}>
-        {/* <Toolbar sx={{display: 'flex', justifyContent: 'space-between', width: '100%', height: '100rem'}}>
-          <Typography variant="h1" color="black" noWrap >
-            Dog Photo Album
-          </Typography>
-        </Toolbar> */}
-      </AppBar>
+      <AppBar position="relative" sx={{height: "10rem", bgcolor: "white", boxShadow: "none"}} />
     <div>
       <HomeScreen />
     </div>

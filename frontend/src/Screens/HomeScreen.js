@@ -9,24 +9,23 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useStyles } from '../components/cardStyles';
 
+// used to style components
+import { useStyles } from '../components/cardStyles';
 
 const theme = createTheme();
 
-function HomeScreen (props) {
+function HomeScreen () {
 
+  // classes, items(dogs), dispatch, endpoint
   const classes = useStyles();
-
-  
   const itemList = useSelector(state => state.itemList);
   const {items, loading, error} = itemList;
-  
   const dispatch = useDispatch();
-
   const numDogs = 15;
   const dogUrl = 'https://dog.ceo/api/breeds/image/random';
 
+  // dog enpoint is only hit numDogs times for each render
   useEffect(() => {
       dispatch(listItems(dogUrl, numDogs));
       return () => {
@@ -57,6 +56,7 @@ function HomeScreen (props) {
                       <CardMedia
                           className = {classes.cardImage}
                           component="img"
+                          // This prop needs to be set based on response JSON (dogs API url was json.message)
                           image={item.message}
                           alt="random"
                       />
