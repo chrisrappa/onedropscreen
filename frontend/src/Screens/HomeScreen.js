@@ -13,6 +13,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 // Used to style components
 import { useStyles } from '../components/cardStyles';
 import { Fade } from '@mui/material';
+import useInterval from 'react-useinterval';
 
 const theme = createTheme();
 
@@ -25,11 +26,19 @@ export default function HomeScreen () {
 
   const dispatch = useDispatch();
   const productUrl = 'https://onedrop.today/products.json';
+  const minute = 60000;
   
   // Grab products from the endpoint
   useEffect(() => {
 
     dispatch(listProducts(productUrl));
+
+    // Call product list every minute
+    const interval = setInterval(() => {
+      dispatch(listProducts(productUrl));
+    }, minute);
+
+    return () => clearInterval(interval);
 
   }, [dispatch]);
 
