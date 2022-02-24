@@ -1,19 +1,18 @@
 import { 
-  ITEM_LIST_REQUEST, 
-  ITEM_LIST_SUCCESS, 
-  ITEM_LIST_FAIL
+  PRODUCT_LIST_REQUEST, 
+  PRODUCT_LIST_SUCCESS, 
+  PRODUCT_LIST_FAIL,
 } from "../constants/itemConstants";
 
-export function itemListReducer(state = { items: [] }, action) {
+export function productListReducer(state = {}, action) {
   switch (action.type) {
-    case ITEM_LIST_REQUEST:
-      return { loading: true, items: [] };
-    case ITEM_LIST_SUCCESS:
-      return { loading: false, items: action.payload };
-    case ITEM_LIST_FAIL:
+    case PRODUCT_LIST_REQUEST:
+      return { loading: true, products: [] };
+    case PRODUCT_LIST_SUCCESS:
+      return { loading: false, products: action.payload };
+    case PRODUCT_LIST_FAIL:
       return { loading: false, error: action.payload }
     default:
       return state;
   }
 }
-

@@ -26,10 +26,10 @@ export default function App() {
       {/* To Do: Put sx overrides in to cardStyles.js */}
       <Toolbar sx={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
         <Typography variant="h4" color="black" noWrap >
-          BioPlus
+          OneDrop
         </Typography>
         <Typography variant="h4" color="black" noWrap >
-          Portfolio
+          Tech Assessment
         </Typography>
       </Toolbar>
     </header>

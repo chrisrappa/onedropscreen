@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { listItems } from '../actions/itemActions';
+import { listProducts } from '../actions/itemActions';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
@@ -10,28 +10,32 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-// used to style components
+// Used to style components
 import { useStyles } from '../components/cardStyles';
+import { Fade } from '@mui/material';
 
 const theme = createTheme();
 
 export default function HomeScreen () {
 
-  // classes, items(dogs), dispatch, endpoint
   const classes = useStyles();
-  const itemList = useSelector(state => state.itemList);
-  const {items, loading, error} = itemList;
-  const dispatch = useDispatch();
-  const numDogs = 15;
-  const dogUrl = 'https://dog.ceo/api/breeds/image/random';
 
-  // dog enpoint is only hit numDogs times for each render
+  const productList = useSelector(state => state.productList);
+  const {products, loading, error} = productList;
+
+  const dispatch = useDispatch();
+  const productUrl = 'https://onedrop.today/products.json';
+  
+  // Grab products from the endpoint
   useEffect(() => {
-      dispatch(listItems(dogUrl, numDogs));
-      return () => {
-        //
-      }
+
+    dispatch(listProducts(productUrl));
+
   }, [dispatch]);
+
+  // Isolate product data then sort by descending price
+  const productData = products?.data?.products;
+  const sortedProducts = productData?.sort((a, b) => (parseInt(a.variants[0].price) < parseInt(b.variants[0].price)) ? 1 : -1);
 
   return (
   <>
@@ -45,25 +49,31 @@ export default function HomeScreen () {
         <main>
           <Container sx={{ py: 3 }} maxWidth="100%">
             <Grid container spacing={1} sx={{width: '100%'}}>
-              {items.map((item, index) => (
+              {sortedProducts?.map((product, index) => (
                 <Grid item key={index} xs={12} sm={3} md={2.40} height={275}>
-                  <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column', padding: '0'}}
-                  >
-                    <CardContent
-                      className = {classes.cardContent}
-                    >
-                      <CardMedia
-                          className = {classes.cardImage}
-                          component="img"
-                          image={item.message}
-                          alt="random"
-                      />
-                      <Typography className = {classes.titleText}>
-                        Card Title
-                      </Typography>
-                    </CardContent>
-                  </Card>
+                  {product.variants[0].price !== '0.00' && (
+                    <Fade in timeout={500 + (index * 100)}>
+                      <Card
+                      sx={{ height: '100%', display: 'flex', flexDirection: 'column', padding: '0'}}
+                      >
+                        <CardContent
+                          className = {classes.cardContent}
+                        >
+                          <CardMedia
+                              className = {classes.cardImage}
+                              image = {product.images[0].src}
+                              component="img"
+                              alt="random"
+                          />
+                          <Typography className = {classes.titleText}>
+                            <Typography style={{fontSize: '2.5rem'}}>{product.title}</Typography>
+                            <Typography style={{fontSize: '1.5rem'}}>{product.variants[0].price}</Typography>
+                          </Typography>
+                        </CardContent>
+                      </Card>
+                    </Fade>
+                  )}
+                  
                 </Grid>
               ))}
             </Grid>

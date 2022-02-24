@@ -5,8 +5,14 @@ export const useStyles = makeStyles(theme => ({
     zIndex: '1',
     opacity: '100%',
     color: 'black',
-    fontSize: '4rem',
     position: 'absolute',
+    display: 'flex',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+    maxWidth: '75%',
+    textAlign: 'center',
     '&:hover': {
       opacity: '100%',
       cursor: 'pointer',
@@ -19,6 +25,7 @@ export const useStyles = makeStyles(theme => ({
     transition: 'all .22s ease-out',
     height: '100%', 
     padding: '0',
+    backgroundColor: 'white',
     '&:hover': {
       cursor: 'pointer',
       transition: 'all .22s ease-in-out',
